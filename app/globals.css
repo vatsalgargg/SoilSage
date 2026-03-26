@@ -184,6 +184,7 @@ img { display: block; max-width: 100%; }
   width: 100%; min-width: 0;
 }
 .form-group input:focus, .form-group select:focus { border-color: var(--green); background: var(--green-light); }
+.form-group textarea:focus { border-color: var(--green); background: var(--green-light); }
 .form-group select option { background: #fff; color: var(--text); }
 .form-section-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--green); margin: 6px 0 2px; border-left: 3px solid var(--green); padding-left: 8px; }
 .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -277,6 +278,23 @@ img { display: block; max-width: 100%; }
 .moisture-badge.low { background: var(--red-light); color: var(--red); }
 .moisture-badge.medium { background: var(--amber-light); color: var(--amber); }
 .moisture-badge.high { background: var(--green-light); color: var(--green); }
+.planner-mode-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 800; padding: 6px 12px; border-radius: 999px; margin-bottom: 12px; width: fit-content; }
+.planner-mode-badge.sensor { background: var(--blue-light); color: var(--blue); border: 1px solid #bfdbfe; }
+.planner-mode-badge.estimated { background: var(--amber-light); color: var(--amber); border: 1px solid #fbd38d; }
+.planner-mode-badge.compact { margin-bottom: 0; padding: 4px 10px; font-size: 11px; }
+.planner-helper-card { background: linear-gradient(135deg, #fff8e8 0%, #fffdf6 100%); border: 1px solid #f3d7a1; border-radius: 12px; padding: 14px; }
+.planner-helper-title { font-size: 12px; font-weight: 800; color: var(--amber); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+.planner-helper-text { font-size: 13px; color: var(--text2); font-weight: 500; }
+.planner-detail-list { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--text2); }
+.planner-detail-list strong { color: var(--text); }
+.planner-weather { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; font-size: 12px; color: var(--text2); }
+.planner-weather p { display: flex; align-items: center; gap: 6px; }
+.planner-guidance { display: flex; flex-direction: column; gap: 10px; font-size: 13px; color: var(--text2); }
+.planner-guidance strong { color: var(--text); }
+.mode-card { flex: 1; display: flex; align-items: flex-start; gap: 10px; text-align: left; padding: 14px; border-radius: 12px; border: 1.5px solid var(--border2); background: var(--bg); color: var(--text); cursor: pointer; }
+.mode-card.active { border-color: var(--green); background: var(--green-light); }
+.mode-card strong { display: block; font-size: 13px; margin-bottom: 3px; }
+.mode-card span { display: block; font-size: 12px; color: var(--text2); line-height: 1.5; }
 
 /* ===== EMPTY STATES ===== */
 .empty-state { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 36px; text-align: center; color: var(--text2); }
@@ -354,6 +372,16 @@ img { display: block; max-width: 100%; }
   gap: 24px;
   align-items: start;
 }
+.schedule-sidebar,
+.schedule-main { display: flex; flex-direction: column; gap: 16px; }
+.schedule-summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 4px; }
+.schedule-status { display: inline-flex; align-items: center; justify-content: center; min-width: 84px; padding: 5px 10px; border-radius: 999px; font-size: 11px; font-weight: 800; text-transform: capitalize; }
+.schedule-status-planned { background: var(--blue-light); color: var(--blue); }
+.schedule-status-partial,
+.schedule-status-missed { background: var(--amber-light); color: var(--amber); }
+.schedule-status-completed,
+.schedule-status-done { background: var(--green-light); color: var(--green); }
+.schedule-status-hold { background: var(--bg); color: var(--text2); }
 
 /* ===== LOADING ===== */
 .center-loader { display: flex; align-items: center; justify-content: center; padding: 60px; color: var(--green); }
@@ -433,6 +461,7 @@ img { display: block; max-width: 100%; }
   .advisor-layout,
   .schedule-layout,
   .settings-grid,
+  .schedule-summary-grid,
   .rec-main-grid,
   .sci-metrics,
   .form-row-3 {

@@ -6,6 +6,11 @@ import { fetchWeather, geocodeCity } from '../../lib/weather'
 import { Droplets, Sprout, Brain, TrendingUp, CheckCircle, Loader2, MapPin, Thermometer, Wind, CloudRain } from 'lucide-react'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 
+function hasSensorData(field) {
+  return [field?.soil_moisture, field?.soil_ph, field?.soil_temperature, field?.nitrogen, field?.phosphorus, field?.potassium]
+    .some(value => value !== null && value !== undefined && value !== '')
+}
+
 function getSavedLiters(rec) {
   const details = rec?.recommendation_json
   const savedText = details?.waterSaved || ''
@@ -94,7 +99,7 @@ export default function Dashboard({ onNavigate }) {
       <div className="page-header">
         <div>
           <h1 className="page-title">Welcome back, {profile?.full_name?.split(' ')[0] || 'Farmer'} 👋</h1>
-          <p className="page-sub">{profile?.farm_name || 'Your Farm'} · FAO-56 AI Irrigation Management</p>
+          <p className="page-sub">{profile?.farm_name || 'Your Farm'} · FAO-56 planning for sensor-based and no-sensor farms</p>
         </div>
         <button className="btn-primary" onClick={() => onNavigate('advisor')}><Brain size={16} /> Get AI Recommendation</button>
       </div>
@@ -156,7 +161,7 @@ export default function Dashboard({ onNavigate }) {
         <div className="glass-card">
           <div className="card-header">
             <h3>Soil Moisture Trend (7-Day)</h3>
-            <span className="badge-green">Simulated IoT</span>
+            <span className="badge-green">Sensors Optional</span>
           </div>
           <ResponsiveContainer width="100%" height={200}>
             <AreaChart data={soilChartData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
@@ -197,14 +202,17 @@ export default function Dashboard({ onNavigate }) {
           ) : (
             <div className="field-list-mini">
               {fields.slice(0, 5).map(f => {
-                const m = f.soil_moisture || 60
+                const sensorField = hasSensorData(f)
+                const m = sensorField ? f.soil_moisture || 60 : null
                 return (
                   <div key={f.id} className="field-mini-item" onClick={() => onNavigate('advisor')}>
                     <div className="field-mini-info">
                       <span className="field-mini-name">{f.name}</span>
                       <span className="field-mini-crop">{f.crop_type} · {f.area_hectares}ha · {f.soil_type}</span>
                     </div>
-                    <div className={`moisture-badge ${m < 35 ? 'low' : m < 60 ? 'medium' : 'high'}`}>{m}%</div>
+                    {sensorField
+                      ? <div className={`moisture-badge ${m < 35 ? 'low' : m < 60 ? 'medium' : 'high'}`}>{m}%</div>
+                      : <div className="planner-mode-badge compact estimated">No sensor</div>}
                   </div>
                 )
               })}
@@ -216,7 +224,7 @@ export default function Dashboard({ onNavigate }) {
         <div className="glass-card">
           <div className="card-header">
             <h3>Recent AI Recommendations</h3>
-            <button className="link-btn" onClick={() => onNavigate('advisor')}>Run Analysis →</button>
+            <button className="link-btn" onClick={() => onNavigate('schedule')}>Open Planner →</button>
           </div>
           {recentRecs.length === 0 ? (
             <div className="empty-state"><Brain size={36} /><p>No recommendations yet</p><button className="btn-primary sm" onClick={() => onNavigate('advisor')}>Get AI Advice</button></div>

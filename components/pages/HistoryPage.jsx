@@ -50,7 +50,7 @@ export default function HistoryPage() {
   return (
     <div className="page">
       <div className="page-header">
-        <div><h1 className="page-title">History & Logs</h1><p className="page-sub">Past AI recommendations and irrigation records</p></div>
+        <div><h1 className="page-title">History & Logs</h1><p className="page-sub">Past AI recommendations and farmer-entered irrigation records</p></div>
         <button className="btn-primary" onClick={() => setShowLogForm(true)}><Plus size={16} /> Log Irrigation</button>
       </div>
 
@@ -92,7 +92,7 @@ export default function HistoryPage() {
 
           {tab === 'logs' && (
             logs.length === 0 ? (
-              <div className="empty-state"><Droplets size={44} /><p>No irrigation logs yet — click "Log Irrigation" to record one</p></div>
+              <div className="empty-state"><Droplets size={44} /><p>No irrigation logs yet — use this to record actual watering and keep schedules updated</p></div>
             ) : (
               <div className="history-table-wrap">
                 <table className="history-table">

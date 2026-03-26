@@ -3,8 +3,14 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { getMLPrediction } from '../../lib/ml-client'
 import { fetchWeather, geocodeCity } from '../../lib/weather'
+import { buildSoilDataProfile } from '../../lib/irrigation-engine'
 import { getAllCrops, CROP_DATABASE, SOIL_TYPES, GROWTH_STAGES } from '../../lib/crops'
 import { Brain, Loader2, Droplets, Clock, AlertTriangle, CheckCircle, Leaf, FlaskConical } from 'lucide-react'
+
+function hasSensorData(field) {
+  return [field?.soil_moisture, field?.soil_ph, field?.soil_temperature, field?.nitrogen, field?.phosphorus, field?.potassium]
+    .some(value => value !== null && value !== undefined && value !== '')
+}
 
 export default function Advisor() {
   const [fields, setFields] = useState([])
@@ -40,17 +46,31 @@ export default function Advisor() {
       setWeather(w)
       const allCrops = getAllCrops()
       const cropObj = allCrops.find(c => c.name === fieldData.crop_type) || { name: fieldData.crop_type || 'Wheat', category: 'Cereals', waterNeed: 'medium', optimalMoisture: 60, id: 'wheat' }
+      const profiledSoil = buildSoilDataProfile({
+        crop: cropObj,
+        soilData: {
+          moisture: fieldData.soil_moisture,
+          soilType: fieldData.soil_type || 'Loamy Soil',
+          temperature: fieldData.soil_temperature,
+          ph: fieldData.soil_ph,
+          nitrogen: fieldData.nitrogen,
+          phosphorus: fieldData.phosphorus,
+          potassium: fieldData.potassium,
+          growthStage: fieldData.growth_stage || 'Vegetative',
+        },
+        weather: w,
+      })
 
       const irrigationResult = await getMLPrediction({
         crop: { ...cropObj, growthStage: fieldData.growth_stage || 'Vegetative' },
         soilData: {
-          moisture: parseFloat(fieldData.soil_moisture) || 60,
+          moisture: profiledSoil.moisture,
           soilType: fieldData.soil_type || 'Loamy Soil',
-          temperature: parseFloat(fieldData.soil_temperature) || 25,
-          ph: parseFloat(fieldData.soil_ph) || 6.5,
-          nitrogen: parseFloat(fieldData.nitrogen) || 40,
-          phosphorus: parseFloat(fieldData.phosphorus) || 30,
-          potassium: parseFloat(fieldData.potassium) || 35,
+          temperature: profiledSoil.temperature,
+          ph: profiledSoil.ph,
+          nitrogen: profiledSoil.nitrogen,
+          phosphorus: profiledSoil.phosphorus,
+          potassium: profiledSoil.potassium,
           growthStage: fieldData.growth_stage || 'Vegetative',
         },
         weather: w,
@@ -107,7 +127,9 @@ export default function Advisor() {
                       <span className="field-mini-name">{f.name}</span>
                       <span className="field-mini-crop">{f.crop_type} · {f.growth_stage} · {f.area_hectares}ha</span>
                     </div>
-                    <div className={`moisture-badge ${f.soil_moisture < 35 ? 'low' : f.soil_moisture < 60 ? 'medium' : 'high'}`}>{f.soil_moisture}%</div>
+                    {hasSensorData(f)
+                      ? <div className={`moisture-badge ${f.soil_moisture < 35 ? 'low' : f.soil_moisture < 60 ? 'medium' : 'high'}`}>{f.soil_moisture}%</div>
+                      : <div className="planner-mode-badge compact estimated">No sensor</div>}
                   </div>
                 ))}
               </div>

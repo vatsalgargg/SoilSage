@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
-import { LayoutDashboard, Sprout, Brain, Calendar, History, LogOut, Droplets, Menu, X, ChevronRight, Settings, BarChart3, Bug } from 'lucide-react'
+import { LayoutDashboard, Sprout, Brain, Calendar, History, LogOut, Droplets, Menu, X, ChevronRight, Settings, BarChart3, Bug, WifiOff } from 'lucide-react'
 import Dashboard from './pages/Dashboard'
 import Fields from './pages/Fields'
 import Advisor from './pages/Advisor'
@@ -11,6 +11,7 @@ import SettingsPage from './pages/SettingsPage'
 import YieldPricePrediction from './pages/YieldPricePrediction'
 import PestControl from './pages/PestControl'
 import SoilHealthDashboard from './pages/SoilHealthDashboard'
+import NoSensorPlanner from './pages/NoSensorPlanner'
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -18,6 +19,7 @@ const navItems = [
   { id: 'yield-price', label: 'Yield & Price', icon: BarChart3 },
   { id: 'pest-control', label: 'Pest Control', icon: Bug },
   { id: 'soil-health', label: 'Soil Health', icon: Droplets },
+  { id: 'no-sensor', label: 'Without Sensors', icon: WifiOff },
   { id: 'advisor', label: 'AI Advisor', icon: Brain },
   { id: 'schedule', label: 'Schedule', icon: Calendar },
   { id: 'history', label: 'History', icon: History },
@@ -47,6 +49,7 @@ export default function Layout() {
     'yield-price': YieldPricePrediction,
     'pest-control': PestControl,
     'soil-health': SoilHealthDashboard,
+    'no-sensor': NoSensorPlanner,
     advisor: Advisor, 
     schedule: Schedule, 
     history: HistoryPage, 
