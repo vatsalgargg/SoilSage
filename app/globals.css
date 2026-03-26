@@ -355,6 +355,108 @@ img { display: block; max-width: 100%; }
   align-items: start;
 }
 
+.simulation-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.simulation-sliders {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.simulation-slider {
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.simulation-slider-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.simulation-slider-head label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.simulation-slider-head span {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--green);
+}
+
+.simulation-slider input[type="range"] {
+  width: 100%;
+  padding: 0;
+  accent-color: var(--green);
+  background: transparent;
+  border: none;
+}
+
+.simulation-water-saved {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--green-light);
+  color: var(--green);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.simulation-plan-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.simulation-plan-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px;
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  background: var(--bg);
+}
+
+.simulation-plan-day {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.simulation-plan-note {
+  font-size: 12px;
+  color: var(--text2);
+  margin-top: 4px;
+}
+
+.simulation-plan-meta {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--text2);
+  text-align: right;
+}
+
 /* ===== LOADING ===== */
 .center-loader { display: flex; align-items: center; justify-content: center; padding: 60px; color: var(--green); }
 .spin { animation: spin 1s linear infinite; }
@@ -431,6 +533,7 @@ img { display: block; max-width: 100%; }
   .stats-grid,
   .dashboard-grid,
   .advisor-layout,
+  .simulation-layout,
   .schedule-layout,
   .settings-grid,
   .rec-main-grid,
@@ -528,6 +631,14 @@ img { display: block; max-width: 100%; }
   .schedule-table,
   .history-table {
     min-width: 620px;
+  }
+  .simulation-plan-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .simulation-plan-meta {
+    align-items: flex-start;
+    text-align: left;
   }
   .history-table th,
   .history-table td,

@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useTranslation } from '../lib/i18n'
-import { LayoutDashboard, Sprout, Brain, Calendar, History, LogOut, Droplets, Menu, X, ChevronRight, Settings, Globe, BarChart3, Bug, Activity } from 'lucide-react'
+import { LayoutDashboard, Sprout, Brain, Calendar, History, LogOut, Droplets, Menu, X, ChevronRight, Settings, Globe, BarChart3, Bug, Activity, SlidersHorizontal } from 'lucide-react'
 import Dashboard from './pages/Dashboard'
 import Fields from './pages/Fields'
 import Advisor from './pages/Advisor'
@@ -15,6 +15,7 @@ import PestControlPage from './pages/PestControlPage'
 import IrrigationAdvisorPage from './pages/IrrigationAdvisorPage'
 import BenefitsPage from './pages/BenefitsPage'
 import EmergencyHelpPage from './pages/EmergencyHelpPage'
+import SimulationModePage from './pages/SimulationModePage'
 
 export default function Layout() {
   const { t, lang, setLang, languages } = useTranslation()
@@ -29,6 +30,7 @@ export default function Layout() {
     { id: 'dashboard', label: t('dashboard'), icon: LayoutDashboard },
     { id: 'fields', label: t('myFields'), icon: Sprout },
     { id: 'irrigation', label: 'Irrigation Advisor', icon: Droplets },
+    { id: 'simulation', label: 'Simulation Mode', icon: SlidersHorizontal },
     { id: 'yield-price', label: t('yieldPrice'), icon: BarChart3 },
     { id: 'soil-health', label: t('soilHealth'), icon: Activity },
     { id: 'pest-control', label: 'Pest Monitor', icon: Bug },
@@ -43,6 +45,7 @@ export default function Layout() {
     dashboard: Dashboard,
     fields: Fields,
     irrigation: IrrigationAdvisorPage,
+    simulation: SimulationModePage,
     'yield-price': YieldPricePage,
     'soil-health': SoilHealthPage,
     'pest-control': PestControlPage,
